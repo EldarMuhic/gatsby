@@ -1,0 +1,270 @@
+  [1m[35m (3.9ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (4.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(2089653295954267260)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateUsers (20210510012343)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.8ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "name" character varying, "phone" character varying, "twitter" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20210510012343"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2021-05-10 01:31:04.832520"], ["updated_at", "2021-05-10 01:31:04.832520"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(2089653295954267260)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(2089653295954267260)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddEmailAndPasswordHashToUser (20210510021539)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "users" ADD "password_hash" character varying[0m
+  [1m[35m (0.1ms)[0m  [1m[35mALTER TABLE "users" ADD "email" character varying[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20210510021539"]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(2089653295954267260)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started POST "/users/create" for ::1 at 2021-05-09 20:27:23 -0600
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by UsersController#create as */*
+  Parameters: {"email"=>"23@fy.com", "name"=>"gh", "phone"=>"666777788", "password"=>"[FILTERED]"}
+Completed 500 Internal Server Error in 15ms (ActiveRecord: 0.0ms | Allocations: 6990)
+
+
+  
+NameError (uninitialized constant ApplicationRecord(abstract)::Base
+Did you mean?  Base64):
+  
+app/models/user.rb:1:in `<main>'
+app/controllers/users_controller.rb:3:in `create'
+Started POST "/users/create" for ::1 at 2021-05-09 20:33:09 -0600
+  [1m[35m (1.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by UsersController#create as */*
+  Parameters: {"email"=>"23@fy.com", "name"=>"gh", "phone"=>"666777788", "password"=>"[FILTERED]"}
+Completed 500 Internal Server Error in 7ms (ActiveRecord: 0.0ms | Allocations: 3236)
+
+
+  
+LoadError (cannot load such file -- bcrypt):
+  
+app/models/user.rb:1:in `<main>'
+app/controllers/users_controller.rb:3:in `create'
+Started POST "/users/create" for ::1 at 2021-05-09 20:33:10 -0600
+Processing by UsersController#create as */*
+  Parameters: {"email"=>"23@fy.com", "name"=>"gh", "phone"=>"666777788", "password"=>"[FILTERED]"}
+Completed 500 Internal Server Error in 1ms (ActiveRecord: 0.0ms | Allocations: 158)
+
+
+  
+LoadError (cannot load such file -- bcrypt):
+  
+app/models/user.rb:1:in `<main>'
+app/controllers/users_controller.rb:3:in `create'
+Started POST "/users/create" for ::1 at 2021-05-09 21:52:49 -0600
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by UsersController#create as */*
+  Parameters: {"email"=>"23@fy.com", "name"=>"gh", "phone"=>"666777788", "password"=>"[FILTERED]"}
+Completed 500 Internal Server Error in 5ms (ActiveRecord: 0.0ms | Allocations: 3171)
+
+
+  
+LoadError (cannot load such file -- bcrypt):
+  
+app/models/user.rb:1:in `<main>'
+app/controllers/users_controller.rb:3:in `create'
+Started POST "/users/create" for ::1 at 2021-05-09 21:52:56 -0600
+Processing by UsersController#create as */*
+  Parameters: {"email"=>"23@fy.com", "name"=>"gh", "phone"=>"666777788", "password"=>"[FILTERED]"}
+Completed 500 Internal Server Error in 1ms (ActiveRecord: 0.0ms | Allocations: 158)
+
+
+  
+LoadError (cannot load such file -- bcrypt):
+  
+app/models/user.rb:1:in `<main>'
+app/controllers/users_controller.rb:3:in `create'
+Started POST "/users/create" for ::1 at 2021-05-09 21:53:57 -0600
+Processing by UsersController#create as */*
+  Parameters: {"email"=>"23@fy.com", "name"=>"gh", "password"=>"[FILTERED]"}
+Completed 500 Internal Server Error in 5ms (ActiveRecord: 0.0ms | Allocations: 1287)
+
+
+  
+LoadError (cannot load such file -- bcrypt):
+  
+app/models/user.rb:1:in `<main>'
+app/controllers/users_controller.rb:3:in `create'
+Started POST "/users/create" for ::1 at 2021-05-09 21:53:59 -0600
+Processing by UsersController#create as */*
+  Parameters: {"email"=>"23@fy.com", "name"=>"gh", "password"=>"[FILTERED]"}
+Completed 500 Internal Server Error in 1ms (ActiveRecord: 0.0ms | Allocations: 155)
+
+
+  
+LoadError (cannot load such file -- bcrypt):
+  
+app/models/user.rb:1:in `<main>'
+app/controllers/users_controller.rb:3:in `create'
+Started POST "/users/create" for ::1 at 2021-05-09 21:53:59 -0600
+Processing by UsersController#create as */*
+  Parameters: {"email"=>"23@fy.com", "name"=>"gh", "password"=>"[FILTERED]"}
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.0ms | Allocations: 155)
+
+
+  
+LoadError (cannot load such file -- bcrypt):
+  
+app/models/user.rb:1:in `<main>'
+app/controllers/users_controller.rb:3:in `create'
+Started POST "/users/create" for ::1 at 2021-05-09 21:59:55 -0600
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by UsersController#create as */*
+  Parameters: {"email"=>"23@fy.com", "name"=>"gh", "password"=>"[FILTERED]"}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/users_controller.rb:7:in `create'
+  [1m[36mUser Create (1.5ms)[0m  [1m[32mINSERT INTO "users" ("name", "created_at", "updated_at", "password_hash", "email") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "gh"], ["created_at", "2021-05-10 03:59:55.938007"], ["updated_at", "2021-05-10 03:59:55.938007"], ["password_hash", "$2a$12$E2v5Djxx995bxujO9b9J7exONsNga8adaEyuUIhYHguSPLonKeWoy"], ["email", "23@fy.com"]]
+  ↳ app/controllers/users_controller.rb:7:in `create'
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/users_controller.rb:7:in `create'
+Completed 204 No Content in 220ms (ActiveRecord: 6.4ms | Allocations: 10051)
+
+
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" /* loading for inspect */ LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Destroy (0.3ms)[0m  [1m[31mDELETE FROM "users" WHERE "users"."id" = $1[0m  [["id", 1]]
+  [1m[36mTRANSACTION (2.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" /* loading for inspect */ LIMIT $1[0m  [["LIMIT", 11]]
+Started POST "/users/create" for ::1 at 2021-05-09 22:05:23 -0600
+Processing by UsersController#create as */*
+  Parameters: {"email"=>"1@2.com", "name"=>"abdurahman", "phone"=>"666777788", "password"=>"[FILTERED]"}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/users_controller.rb:7:in `create'
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("name", "created_at", "updated_at", "password_hash", "email") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "abdurahman"], ["created_at", "2021-05-10 04:05:23.443921"], ["updated_at", "2021-05-10 04:05:23.443921"], ["password_hash", "$2a$12$Sb2RTGkJU42dPmDpPXcoBOC4.MDB5FpIdSW760xamspys7wJTouDm"], ["email", "1@2.com"]]
+  ↳ app/controllers/users_controller.rb:7:in `create'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/users_controller.rb:7:in `create'
+Completed 204 No Content in 206ms (ActiveRecord: 0.8ms | Allocations: 1667)
+
+
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" /* loading for inspect */ LIMIT $1[0m  [["LIMIT", 11]]
+Started POST "/users/login" for ::1 at 2021-05-09 22:06:30 -0600
+Processing by UsersController#login as */*
+  Parameters: {"email"=>"1@2.com", "password"=>"[FILTERED]"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "1@2.com"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:11:in `login'
+Completed 204 No Content in 205ms (ActiveRecord: 0.4ms | Allocations: 2168)
+
+
+Started POST "/users/login" for ::1 at 2021-05-09 22:09:21 -0600
+Processing by UsersController#login as */*
+  Parameters: {"email"=>"1@2.com", "name"=>"abdurahman", "password"=>"[FILTERED]"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "1@2.com"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:11:in `login'
+Completed 204 No Content in 201ms (ActiveRecord: 0.1ms | Allocations: 517)
+
+
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" /* loading for inspect */ LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[35m (2.8ms)[0m  [1m[34mSELECT COUNT(*) FROM "users"[0m
+Started POST "/users/show_all" for ::1 at 2021-05-16 15:13:11 -0600
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+SyntaxError (/Users/eldarmuhic/Ruby-Practice/gatsby/app/controllers/users_controller.rb:27: syntax error, unexpected tINTEGER, expecting do or '{' or '('
+... "updated password", status 204
+...                            ^~~):
+  
+app/controllers/users_controller.rb:27: syntax error, unexpected tINTEGER, expecting do or '{' or '('
+app/controllers/users_controller.rb:27: syntax error, unexpected tINTEGER, expecting do or '{' or '('
+Started POST "/users/show_all" for ::1 at 2021-05-16 15:15:00 -0600
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by UsersController#show_all as */*
+  Parameters: {"email"=>"1@2.com", "name"=>"abdurahman", "password"=>"[FILTERED]"}
+Completed 204 No Content in 8ms (ActiveRecord: 0.0ms | Allocations: 3349)
+
+
+Started POST "/users/show_all" for ::1 at 2021-05-16 15:16:19 -0600
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by UsersController#show_all as */*
+  Parameters: {"email"=>"1@2.com", "name"=>"abdurahman", "password"=>"[FILTERED]"}
+Completed 204 No Content in 6ms (ActiveRecord: 0.0ms | Allocations: 3349)
+
+
+Started POST "/users/show_all" for ::1 at 2021-05-16 15:18:53 -0600
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by UsersController#show_all as */*
+  Parameters: {"email"=>"1@2.com", "name"=>"abdurahman", "password"=>"[FILTERED]"}
+Completed 500 Internal Server Error in 6ms (ActiveRecord: 0.0ms | Allocations: 3788)
+
+
+  
+NoMethodError (undefined method `all' for nil:NilClass):
+  
+app/controllers/users_controller.rb:21:in `show_all'
+Started POST "/users/show_all" for ::1 at 2021-05-16 15:20:11 -0600
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by UsersController#show_all as */*
+  Parameters: {"email"=>"1@2.com", "name"=>"abdurahman", "password"=>"[FILTERED]"}
+Completed 500 Internal Server Error in 8ms (ActiveRecord: 0.0ms | Allocations: 4982)
+
+
+  
+NameError (undefined local variable or method `user' for #<UsersController:0x007f93a18b16e0>
+Did you mean?  super):
+  
+app/controllers/users_controller.rb:21:in `show_all'
+Started POST "/users/show_all" for ::1 at 2021-05-16 15:21:35 -0600
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by UsersController#show_all as */*
+  Parameters: {"email"=>"1@2.com", "name"=>"abdurahman", "password"=>"[FILTERED]"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  ↳ app/controllers/users_controller.rb:22:in `show_all'
+Completed 204 No Content in 38ms (Views: 28.4ms | ActiveRecord: 4.3ms | Allocations: 9067)
+
+
+Started POST "/users/show_all" for ::1 at 2021-05-16 15:21:54 -0600
+Processing by UsersController#show_all as */*
+  Parameters: {"email"=>"1@2.com", "name"=>"abdurahman", "password"=>"[FILTERED]"}
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "users"[0m
+  ↳ app/controllers/users_controller.rb:22:in `show_all'
+Completed 204 No Content in 6ms (Views: 0.2ms | ActiveRecord: 1.4ms | Allocations: 1452)
+
+
+Started POST "/users/show_all" for ::1 at 2021-05-16 15:22:37 -0600
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by UsersController#show_all as */*
+  Parameters: {"email"=>"1@2.com", "name"=>"abdurahman", "password"=>"[FILTERED]"}
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT COUNT(*) FROM "users"[0m
+  ↳ app/controllers/users_controller.rb:22:in `show_all'
+Completed 204 No Content in 12ms (Views: 0.3ms | ActiveRecord: 2.9ms | Allocations: 4566)
+
+
+Started POST "/users/show_all" for ::1 at 2021-05-16 15:22:58 -0600
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by UsersController#show_all as */*
+  Parameters: {"email"=>"1@2.com", "name"=>"abdurahman", "password"=>"[FILTERED]"}
+Completed 204 No Content in 7ms (Views: 0.3ms | ActiveRecord: 0.0ms | Allocations: 3445)
+
+
+Started POST "/users/show_all" for ::1 at 2021-05-16 15:23:19 -0600
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by UsersController#show_all as */*
+  Parameters: {"email"=>"1@2.com", "name"=>"abdurahman", "password"=>"[FILTERED]"}
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 0.0ms | Allocations: 3445)
+
+
+Started POST "/users/show_all" for ::1 at 2021-05-16 15:24:49 -0600
+Processing by UsersController#show_all as */*
+  Parameters: {"email"=>"1@2.com", "name"=>"abdurahman", "password"=>"[FILTERED]"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  ↳ app/controllers/users_controller.rb:22:in `show_all'
+Completed 200 OK in 12ms (Views: 7.4ms | ActiveRecord: 3.3ms | Allocations: 6094)
+
+
+Started POST "/users/show_all" for ::1 at 2021-05-16 15:25:08 -0600
+Processing by UsersController#show_all as */*
+  Parameters: {"email"=>"1@2.com", "name"=>"abdurahman", "password"=>"[FILTERED]"}
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "users"[0m
+  ↳ app/controllers/users_controller.rb:22:in `show_all'
+Completed 200 OK in 5ms (Views: 0.2ms | ActiveRecord: 1.5ms | Allocations: 1450)
+
+
