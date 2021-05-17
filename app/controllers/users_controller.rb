@@ -1,10 +1,15 @@
 class UsersController < ApplicationController
   def create
-    @user = User.new(params[:user])
-    @user.password = params[:password]
-    @user.email = params[:email]
-    @user.name = params[:name]
-    @user.save!
+    is_user = User.find_by_email(params[:email])
+    if !is_user
+      @user = User.new(params[:user])
+      @user.password = params[:password]
+      @user.email = params[:email]
+      @user.name = params[:name]
+      @user.save!
+    else
+      render :json => "User email taken!", status: 406
+    end
   end
 
   def login
